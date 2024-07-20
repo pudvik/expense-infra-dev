@@ -11,7 +11,7 @@ resource "aws_lb" "app_alb" {
   tags = merge(
     var.common_tags,
     {
-        Name = "${var.project}-${var.environment}-web-alb"
+        Name = "${var.project}-${var.environment}-app-alb"
     }
   )
 }
@@ -46,8 +46,9 @@ module "records" {
       type    = "A"
       allow_overwrite = true
       alias   = {
-        name    = aws_lb.web_alb.dns_name
-        zone_id = aws_lb.web_alb.zone_id
+        name    = aws_lb.app_alb.dns_name
+        zone_id = aws_lb.app_alb.zone_id
+
       }
     }
   ]

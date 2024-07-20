@@ -17,7 +17,7 @@ module "db" {
 
   # DB subnet group
   
-  subnet_ids             = data.aws_ssm_parameter.db_subnet_group_name
+  subnet_ids             = [data.aws_ssm_parameter.db-subnet-group-name.value]
 
   # DB parameter group
   family = "mysql5.7"

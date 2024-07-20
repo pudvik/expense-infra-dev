@@ -188,7 +188,7 @@ resource "aws_security_group_rule" "web_alb_public" {
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
-  source_security_group_id = module.public.sg_id
+  cidr_blocks = ["0.0.0.0/0"]
   security_group_id = module.web_alb.sg_id
 }
 
@@ -197,6 +197,15 @@ resource "aws_security_group_rule" "web_alb_public_https" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  source_security_group_id = module.public.sg_id
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = module.backend.sg_id
+}
+
+resource "aws_security_group_rule" "backend-default" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks = ["172.31.0.0/16"]
   security_group_id = module.web_alb.sg_id
 }
